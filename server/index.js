@@ -57,8 +57,7 @@ if (process.env.STRIPE_SECRET_KEY) {
 
 
 let serverInstance = null
-// Start server unless in test mode, but allow override for e2e tests
-if (process.env.NODE_ENV !== 'test' || process.env.RUN_SERVER_IN_TEST === 'true') {
+if (process.env.NODE_ENV !== 'test') {
   // Port selection helpers (ESM + top-level await)
   function isPortFree(port, host = '0.0.0.0') {
     return new Promise((resolve) => {

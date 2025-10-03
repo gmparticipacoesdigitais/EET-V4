@@ -1,29 +1,13 @@
-import { useState } from 'react'
-import { useAuth } from '../auth/AuthContext'
-import supabase from '../lib/supabase'
-
-async function handleSubscribe(e) {
-  e.preventDefault()
-  const { data: { session } } = await supabase.auth.getSession()
-  if (!session) { alert('Você precisa estar logado para assinar.'); return }
-  const token = session.access_token
-  const res = await fetch('/api/stripe/checkout', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-  })
-  const { url } = await res.json()
-  if (url) window.location.assign(url)
-}
+import { useEffect } from 'react'
 
 export default function SubscribePage() {
-  const { user } = useAuth()
-  const [loading, setLoading] = useState(false)
+  const href = (import.meta && import.meta.env && import.meta.env.VITE_HOTMART_PAY_URL) || 'https://pay.hotmart.com/Q102005462K?checkoutMode=2'
 
-  const onSubscribeClick = (e) => {
-    e.preventDefault()
-    setLoading(true)
-    handleSubscribe(e).finally(() => setLoading(false))
-  }
+  useEffect(() => {
+    const s = document.createElement('script'); s.src = 'https://static.hotmart.com/checkout/widget.min.js'; document.head.appendChild(s)
+    const l = document.createElement('link'); l.rel='stylesheet'; l.href='https://static.hotmart.com/css/hotmart-fb.min.css'; document.head.appendChild(l)
+    return () => { try { document.head.removeChild(s); document.head.removeChild(l) } catch {} }
+  }, [])
 
   return (
     <div className="auth-page">
@@ -35,10 +19,8 @@ export default function SubscribePage() {
             </span>
             <h1 id="subscribeTitle" style={{ margin: 0 }}>Assinatura necessária</h1>
           </div>
-          <p className="text-soft" style={{ marginTop: -8 }}>Plano mensal via Stripe.</p>
-          <button onClick={onSubscribeClick} disabled={loading || !user} className="btn btn-primary" aria-live="polite">
-            {loading ? 'Processando...' : 'Assinar agora'}
-          </button>
+          <p className="text-soft" style={{ marginTop: -8 }}>Plano mensal R$ 9,90 via Hotmart.</p>
+          <a onClick={(e)=>e.preventDefault()} href={href} target="_blank" rel="noopener noreferrer" className="hotmart-fb hotmart__button-checkout"><img alt="Comprar" src='https://static.hotmart.com/img/btn-buy-green.png' /></a>
           <div className="grid" style={{ gap: 12, marginTop: 16 }}><a className="btn btn-secondary" href="/">Voltar</a></div>
         </main>
       </div>

@@ -1,13 +1,185 @@
-<!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>App</title>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; connect-src 'self' https: http:; style-src 'self' 'unsafe-inline' https: http:; img-src 'self' data: https: http:;">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified Employee Management</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background-color: #f0f2f5; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        #login-view, #data-view { display: none; }
+        #login-view.active, #data-view.active { display: block; }
+        h1 { text-align: center; color: #333; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.5rem; color: #555; }
+        input { width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 0.75rem; border: none; border-radius: 4px; background-color: #007bff; color: white; font-size: 1rem; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #employee-data { margin-top: 1rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-view">
+            <h1>Login</h1>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div id="data-view">
+            <h1>Employee Data</h1>
+            <button id="logout-button">Logout</button>
+            <div id="employee-data"></div>
+            <button id="subscribe-button" style="display:none; background-color: #28a745; margin-top: 1rem;">Subscribe Now</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Step 2: Embed and Obfuscate Data ---
+        const obfuscatedData = 'W3siaWQiOiAxLCAibmFtZSI6ICJBbGljZSIsICJwb3NpdGlvbiI6ICJEZXZlbG9wZXIiLCAic2FsYXJ5IjogODAwMDB9LHsiaWQiOiAyLCAibmFtZSI6ICJCb2IiLCAicG9zaXRpb24iOiAiRGVzaWduZXIiLCAic2FsYXJ5IjogNzUwMDB9LHsiaWQiOiAzLCAibmFtZSI6ICJDaGFybGllIiwgInBvc2l0aW9uIjogIk1hbmFnZXIiLCAic2FsYXJ5IjogOTAwMDB9XQ==';
+
+        function getEmployeeData() {
+            try {
+                // Decode the Base64 string and parse it as JSON
+                const decodedString = atob(obfuscatedData);
+                return JSON.parse(decodedString);
+            } catch (e) {
+                console.error("Failed to decode or parse data:", e);
+                return [];
+            }
+        }
+
+        // --- Step 3: Implement Supabase Authentication & Access Control ---
+        const { createClient } = supabase;
+        const supabaseClient = createClient('https://bwjxpyiyskoteapnrxak.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ3anhweWl5c2tvdGVhcG5yeGFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgyNDE4MjMsImV4cCI6MjA3MzgxNzgyM30.3VTlYjJMo2Oh5tl9iEdVMFi3ePJ6FetpJhKu6o0g4Ok');
+
+        const loginForm = document.getElementById('login-form');
+        const logoutButton = document.getElementById('logout-button');
+        const loginView = document.getElementById('login-view');
+        const dataView = document.getElementById('data-view');
+        const employeeDataDiv = document.getElementById('employee-data');
+        const subscribeButton = document.getElementById('subscribe-button');
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) {
+                alert(`Login failed: ${error.message}`);
+            }
+        });
+
+        logoutButton.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+        });
+
+        async function checkSubscriptionStatus(userId) {
+            const { data, error } = await supabaseClient
+                .from('profiles')
+                .select('is_subscribed')
+                .eq('id', userId)
+                .single();
+
+            if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found
+                console.error("Error fetching subscription status:", error);
+                return false;
+            }
+            return data ? data.is_subscribed : false;
+        }
+
+        function renderEmployeeData(data) {
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(emp => `
+                            <tr>
+                                <td>${emp.id}</td>
+                                <td>${emp.name}</td>
+                                <td>${emp.position}</td>
+                                <td>${emp.salary}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            employeeDataDiv.innerHTML = table;
+        }
+
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+            if (session) {
+                const user = session.user;
+                const isSubscribed = await checkSubscriptionStatus(user.id);
+
+                loginView.classList.remove('active');
+                dataView.classList.add('active');
+
+                if (isSubscribed) {
+                    const employeeData = getEmployeeData();
+                    renderEmployeeData(employeeData);
+                    subscribeButton.style.display = 'none';
+                } else {
+                    employeeDataDiv.innerHTML = '<p>You must be subscribed to view this content.</p>';
+                    subscribeButton.style.display = 'block';
+                }
+            } else {
+                loginView.classList.add('active');
+                dataView.classList.remove('active');
+            }
+        });
+
+        subscribeButton.addEventListener('click', async () => {
+            try {
+                const { data, error } = await supabaseClient.functions.invoke('create-checkout-session');
+                if (error) throw error;
+                if (data.url) {
+                    window.location.href = data.url;
+                }
+            } catch (error) {
+                alert(`Could not create checkout session: ${error.message}`);
+            }
+        });
+
+        // Initial check in case the user is already logged in
+        (async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                const user = session.user;
+                const isSubscribed = await checkSubscriptionStatus(user.id);
+                loginView.classList.remove('active');
+                dataView.classList.add('active');
+                if (isSubscribed) {
+                    const employeeData = getEmployeeData();
+                    renderEmployeeData(employeeData);
+                    subscribeButton.style.display = 'none';
+                } else {
+                    employeeDataDiv.innerHTML = '<p>You must be subscribed to view this content.</p>';
+                    subscribeButton.style.display = 'block';
+                }
+            } else {
+                loginView.classList.add('active');
+            }
+        })();
+    </script>
+</body>
 </html>

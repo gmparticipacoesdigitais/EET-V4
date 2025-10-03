@@ -15,7 +15,11 @@ import { AuthProvider } from './auth/AuthContext.jsx'
 import ProtectedRoute from './auth/ProtectedRoute.jsx'
 import AuthGate from './auth/AuthGate.jsx'
 import AuthPage from './pages/AuthPage.jsx'
+import CheckoutSuccess from './pages/CheckoutSuccess.jsx'
+import CheckoutCancel from './pages/CheckoutCancel.jsx'
 import SubscribePage from './pages/SubscribePage.jsx'
+import SubscribeSuccess from './pages/SubscribeSuccess.jsx'
+import SubscribeCancel from './pages/SubscribeCancel.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -23,7 +27,11 @@ createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<AuthPage />} />
+          <Route path="/checkout/success" element={<ProtectedRoute><CheckoutSuccess /></ProtectedRoute>} />
+          <Route path="/checkout/cancel" element={<ProtectedRoute><CheckoutCancel /></ProtectedRoute>} />
           <Route path="/subscribe" element={<ProtectedRoute><SubscribePage /></ProtectedRoute>} />
+          <Route path="/subscribe/success" element={<ProtectedRoute><SubscribeSuccess /></ProtectedRoute>} />
+          <Route path="/subscribe/cancel" element={<ProtectedRoute><SubscribeCancel /></ProtectedRoute>} />
           <Route path="/" element={<ProtectedRoute><AuthGate><AppLayout /></AuthGate></ProtectedRoute>}>
             <Route index element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
