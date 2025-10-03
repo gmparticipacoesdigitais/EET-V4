@@ -86,20 +86,6 @@
             await supabaseClient.auth.signOut();
         });
 
-        async function checkSubscriptionStatus(userId) {
-            const { data, error } = await supabaseClient
-                .from('profiles')
-                .select('is_subscribed')
-                .eq('id', userId)
-                .single();
-
-            if (error && error.code !== 'PGRST116') { // PGRST116 means no rows found
-                console.error("Error fetching subscription status:", error);
-                return false;
-            }
-            return data ? data.is_subscribed : false;
-        }
-
         function renderEmployeeData(data) {
             const table = `
                 <table>
@@ -127,12 +113,42 @@
         }
 
         supabaseClient.auth.onAuthStateChange(async (event, session) => {
+            loginView.classList.toggle('active', !session);
+            dataView.classList.toggle('active', !!session);
+
             if (session) {
                 const user = session.user;
-                const isSubscribed = await checkSubscriptionStatus(user.id);
 
-                loginView.classList.remove('active');
-                dataView.classList.add('active');
+                // Check if a profile exists for the user
+                let { data: profile, error: profileError } = await supabaseClient
+                    .from('profiles')
+                    .select('is_subscribed')
+                    .eq('id', user.id)
+                    .single();
+
+                // If no profile, create one
+                if (profileError && profileError.code === 'PGRST116') {
+                    const { data: newProfile, error: insertError } = await supabaseClient
+                        .from('profiles')
+                        .insert([{ id: user.id, is_subscribed: false }])
+                        .select('is_subscribed')
+                        .single();
+
+                    if (insertError) {
+                        console.error('Error creating profile:', insertError);
+                        employeeDataDiv.innerHTML = '<p>Error setting up your account.</p>';
+                        subscribeButton.style.display = 'none';
+                        return;
+                    }
+                    profile = newProfile;
+                } else if (profileError) {
+                    console.error('Error fetching profile:', profileError);
+                    employeeDataDiv.innerHTML = '<p>Error fetching your account details.</p>';
+                    subscribeButton.style.display = 'none';
+                    return;
+                }
+
+                const isSubscribed = profile.is_subscribed;
 
                 if (isSubscribed) {
                     const employeeData = getEmployeeData();
@@ -142,9 +158,6 @@
                     employeeDataDiv.innerHTML = '<p>You must be subscribed to view this content.</p>';
                     subscribeButton.style.display = 'block';
                 }
-            } else {
-                loginView.classList.add('active');
-                dataView.classList.remove('active');
             }
         });
 
@@ -160,26 +173,7 @@
             }
         });
 
-        // Initial check in case the user is already logged in
-        (async () => {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                const user = session.user;
-                const isSubscribed = await checkSubscriptionStatus(user.id);
-                loginView.classList.remove('active');
-                dataView.classList.add('active');
-                if (isSubscribed) {
-                    const employeeData = getEmployeeData();
-                    renderEmployeeData(employeeData);
-                    subscribeButton.style.display = 'none';
-                } else {
-                    employeeDataDiv.innerHTML = '<p>You must be subscribed to view this content.</p>';
-                    subscribeButton.style.display = 'block';
-                }
-            } else {
-                loginView.classList.add('active');
-            }
-        })();
+        // onAuthStateChange handles the initial check, so this is no longer needed.
     </script>
 </body>
 </html>
