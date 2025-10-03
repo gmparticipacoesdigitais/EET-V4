@@ -42,7 +42,7 @@ describe('calcularPeriodo', () => {
     closeTo(agosto.provisoes.total, 677.52, 0.1)
     closeTo(agosto.totalMes, 1832.36, 0.1)
 
-    closeTo(totais.periodo, 56800 * 3 + agosto.totalMes)
+    closeTo(totais.periodo, 56800 * 3 + agosto.totalMes, 0.1)
   })
 
   it('zera provisões em mês parcial quando política desabilita', () => {

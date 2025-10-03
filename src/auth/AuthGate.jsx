@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useAuth } from './AuthContext'
 
 function SpinnerPage({ text = 'Validando acesso...' }) {
@@ -19,19 +19,32 @@ function SpinnerPage({ text = 'Validando acesso...' }) {
 }
 
 export default function AuthGate({ children }) {
-  const { user } = useAuth()
-  const [state, setState] = useState({ loading: true, allowed: false })
+  const { user, subscription, loading } = useAuth()
 
   useEffect(() => {
-    const run = () => {
-      if (!user) { window.location.assign('/login'); return }
-      const DEV_EMAIL = (import.meta && import.meta.env && import.meta.env.VITE_DEV_EMAIL) || 'gmparticipacoes@gmail.com'
-      if (user?.email === DEV_EMAIL || user?.uid === 'dev') { setState({ loading: false, allowed: true }); return }
+    if (loading) return
+    if (!user) {
+      window.location.assign('/login')
+      return
+    }
+
+    const DEV_EMAIL = (import.meta && import.meta.env && import.meta.env.VITE_DEV_EMAIL) || 'gmparticipacoes@gmail.com'
+    const isDev = user?.email === DEV_EMAIL || user?.uid === 'dev'
+    const hasActiveSub = subscription?.active === true
+
+    if (!isDev && !hasActiveSub) {
       window.location.assign('/subscribe')
     }
-    run()
-  }, [user])
+  }, [user, subscription, loading])
 
-  if (state.loading) return <SpinnerPage text="Validando acesso..." />
-  return state.allowed ? children : null
+  if (loading) {
+    return <SpinnerPage text="Validando acesso..." />
+  }
+
+  const DEV_EMAIL = (import.meta && import.meta.env && import.meta.env.VITE_DEV_EMAIL) || 'gmparticipacoes@gmail.com'
+  const isDev = user?.email === DEV_EMAIL || user?.uid === 'dev'
+  const hasActiveSub = subscription?.active === true
+  const isAllowed = user && (isDev || hasActiveSub)
+
+  return isAllowed ? children : <SpinnerPage text="Verificando assinatura..." />
 }

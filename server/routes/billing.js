@@ -112,8 +112,8 @@ export function createBillingRouter({ stripe, appUrl }) {
         mode: 'subscription',
         customer: stripeCustomerId,
         line_items: [{ price, quantity: 1 }],
-        success_url: `${successBase}/subscribe/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${successBase}/subscribe/cancel`,
+        success_url: `${successBase}/dashboard`,
+        cancel_url: `${successBase}/subscribe`,
         allow_promotion_codes: true,
         billing_address_collection: 'auto',
       })
