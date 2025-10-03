@@ -1,0 +1,50 @@
+/* Reset/base + typography */
+html { color: var(--color-ink); background: var(--color-bg); font-family: var(--font-primary); font-size: var(--body-size); }
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+a { color: var(--accent-600); text-decoration: none; }
+a:hover { text-decoration: underline; }
+*, *::before, *::after { box-sizing: border-box; }
+img, canvas, svg { max-width: 100%; height: auto; }
+h1, h2, h3, h4 { margin: 0 0 var(--space-4); line-height: var(--lh-tight); letter-spacing: -0.01em; }
+h1 { font-size: var(--title-size); font-weight: var(--fw-medium); }
+h2 { font-size: calc(var(--title-size) - 2px); font-weight: var(--fw-medium); }
+h3 { font-size: var(--fs-20); font-weight: var(--fw-regular); }
+p, li, td, th { font-size: var(--body-size); line-height: var(--lh-normal); }
+small, .caption { font-size: var(--caption-size); line-height: var(--lh-relaxed); color: var(--color-ink-soft); }
+strong { font-weight: var(--fw-semibold); }
+.container { width: 100%; max-width: var(--container-max); margin-inline: auto; padding: 0 var(--space-6); }
+
+/* Focus visible rings */
+:where(button, [role="button"], a, input, select, textarea) {
+  outline: none;
+}
+:where(button, [role="button"], a, input, select, textarea):focus-visible {
+  box-shadow: 0 0 0 2px var(--accent-400), 0 0 0 4px color-mix(in oklab, var(--accent-400) 20%, transparent);
+  border-radius: 8px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Utility text handling */
+.text-ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.text-soft { color: var(--color-ink-soft); }
+.cells-wrap { word-break: break-word; overflow-wrap: anywhere; }
+
+/* Headings inside cards/tables */
+.card > h2, .card > h3 { margin-bottom: var(--space-3); }
+
+/* Heading utility classes */
+.heading-1 { font-size: var(--fs-32); font-weight: var(--fw-semibold); line-height: 1.2; margin-bottom: var(--space-4); }
+.heading-2 { font-size: var(--fs-24); font-weight: var(--fw-medium); line-height: 1.25; margin-bottom: var(--space-3); }
+.heading-3 { font-size: var(--fs-20); font-weight: var(--fw-regular); line-height: 1.3; margin-bottom: var(--space-3); }
+.text-sm { font-size: var(--fs-14); }
+.text-xs { font-size: var(--fs-12); }
+
+/* A11y utility */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }

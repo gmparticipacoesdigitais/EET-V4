@@ -1,0 +1,86 @@
+/* Buttons */
+.btn { 
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  height: 44px; padding: var(--space-3) var(--space-5); border-radius: var(--radius-md);
+  border: 1px solid var(--color-border); font-weight: var(--fw-medium); font-size: var(--fs-14); line-height: 1.2;
+  transition: background var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
+}
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.btn-primary { background: var(--accent-400); color: white; border-color: transparent; }
+.btn-primary:hover { background: var(--accent-500); }
+.btn-secondary { background: var(--color-surface); color: var(--color-ink); }
+.btn-secondary:hover { background: color-mix(in oklab, var(--accent-50) 20%, var(--color-surface)); }
+.btn-ghost { background: transparent; color: var(--color-ink); border-color: transparent; }
+.btn-ghost:hover { background: color-mix(in oklab, var(--accent-50) 50%, transparent); }
+.btn-destructive { background: var(--danger); color: white; border-color: transparent; }
+.btn-destructive:hover { filter: brightness(.95); }.btn-logout { background: var(--accent-100); color: var(--accent-700); border: 1px solid var(--accent-300); }
+.btn-logout:hover { background: var(--accent-200); color: var(--accent-800); box-shadow: 0 2px 4px rgba(0,0,0,.1); }
+
+/* Inputs */
+.field { display: grid; gap: 6px; }
+.field label { font-size: var(--fs-14); color: var(--color-ink-soft); }
+.input, .select, .datefield { 
+  width: 100%; height: 44px; padding: 0 12px; border-radius: var(--radius-md);
+  border: 1px solid var(--color-border); background: var(--color-surface);
+  color: var(--color-ink); transition: border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+}
+.input::placeholder { color: color-mix(in oklab, var(--color-ink-soft) 60%, transparent); }
+.input:focus, .select:focus, .datefield:focus { border-color: var(--accent-400); box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent-400) 20%, transparent); }
+.field .hint { font-size: var(--fs-12); color: var(--color-ink-soft); }
+.field .error { font-size: var(--fs-12); color: var(--danger); }
+
+/* Cards */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  position: relative;
+  z-index: var(--z-raised);
+}
+
+/* Table */
+.table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.table th, .table td { padding: 12px 14px; border-bottom: 1px solid var(--color-border); text-align: left; }
+.table thead th { font-weight: 600; background: var(--color-surface); position: sticky; top: 0; z-index: var(--z-raised); }
+.table tr:hover { background: color-mix(in oklab, var(--accent-50) 35%, transparent); }
+.table .actions { display: flex; gap: 8px; }
+.table-wrap { overflow: auto; max-height: clamp(340px, 50vh, 640px); }
+
+/* Recharts tooltip above canvas */
+.recharts-tooltip-wrapper { z-index: var(--z-tooltip) !important; pointer-events: none; }
+
+/* Modal */
+.modal-backdrop { position: fixed; inset: 0; background: color-mix(in oklab, black 40%, transparent); backdrop-filter: blur(6px); display: grid; place-items: center; z-index: var(--z-modal); }
+.modal { background: var(--color-panel); border-radius: var(--radius-lg); box-shadow: var(--shadow-3); border: 1px solid var(--color-border); width: min(560px, 92vw); }
+.modal header { padding: 16px 20px; border-bottom: 1px solid var(--color-border); font-weight: 600; }
+.modal .content { padding: 20px; }
+.modal footer { padding: 16px 20px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 8px; }
+
+/* Toasts */
+.toast-stack { position: fixed; top: 16px; right: 16px; display: grid; gap: 8px; z-index: var(--z-toast); }
+.toast { display: grid; grid-auto-flow: column; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-md); color: white; box-shadow: var(--shadow-2); }
+.toast.success { background: var(--success); }
+.toast.info { background: var(--info); }
+.toast.warning { background: var(--warning); }
+.toast.danger { background: var(--danger); }
+
+/* KPI */
+.kpi { display: grid; gap: 4px; }
+.kpi .value { font-size: var(--fs-32); font-weight: 700; }
+.kpi .label { font-size: var(--fs-14); color: var(--color-ink-soft); }
+.kpi .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; background: var(--accent-100); color: var(--accent-700); font-size: var(--fs-12); }
+
+/* Charts */
+.chart-card { min-height: 320px; }
+.chart-area { position: relative; width: 100%; height: clamp(280px, 40vh, 480px); }
+.chart-area > canvas, .chart-area > .echart-root { position: absolute; inset: 0; }
+/* Larger TOTAL pie card */
+.chart-card--total { padding: clamp(var(--space-6), 2vw, var(--space-8)); }
+.chart-area--tall { position: relative; width: 100%; height: clamp(380px, 52vh, 720px); }
+
+/* Recharts typography */
+.recharts-default-legend, .recharts-cartesian-axis-tick text, .recharts-tooltip-item-list li {
+  font-family: var(--font-primary) !important; font-size: 14px !important; fill: var(--color-ink-soft) !important;
+}

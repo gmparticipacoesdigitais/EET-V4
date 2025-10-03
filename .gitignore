@@ -1,0 +1,41 @@
+# Segredos
+.env
+.env.*
+
+# Vercel (metadados locais)
+.vercel
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+firebase-debug.log*
+
+# Sistema (Windows/macOS)
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDEs/editores
+.vscode/*
+!.vscode/launch.json
+.idea/
+*.iml
+.vs/
+*.code-workspace
+
+# Node/Vite
+node_modules/
+dist/
+.cache/
+coverage/
+*.tsbuildinfo
+
+# Java/Maven
+**/target/
+*.class
+*.jar
+*.war
+*.ear
+

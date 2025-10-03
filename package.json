@@ -1,0 +1,40 @@
+{
+  "name": "google-auth-ts-8080",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "node server/index.js",
+    "dev:full": "concurrently -k -n server,client \"node server/index.js\" \"vite\"",
+    "build": "vite build",
+    "preview": "vite preview --port 8080 --host",
+    "test": "dotenv -e .env.local -- vitest run"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.2",
+    "concurrently": "^9.2.1",
+    "dotenv": "^17.2.2",
+    "dotenv-cli": "^10.0.0",
+    "supertest": "^7.1.4",
+    "typescript": "^5.5.4",
+    "vite": "^7.1.6",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "cors": "^2.8.5",
+    "date-fns": "^2.30.0",
+    "express": "^5.1.0",
+    "firebase": "^10.12.2",
+    "firebase-admin": "^13.5.0",
+    "jose": "^6.1.0",
+    "pino": "^9.9.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "recharts": "^2.12.7",
+    "stripe": "^18.5.0",
+    "zod": "^4.1.5"
+  }
+}

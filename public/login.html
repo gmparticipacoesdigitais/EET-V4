@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - Calculadora de Encargos Trabalhistas</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: http:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: http:; connect-src 'self' https: http:; style-src 'self' 'unsafe-inline' https: http:; img-src 'self' data: https: http:;">
+    <link rel="stylesheet" href="/src/styles/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+  <body>
+    <div class="login-page">
+      <div class="login-card">
+        <header class="login-header">
+          <div class="login-logo">
+            <i class="fas fa-calculator" aria-hidden="true"></i>
+          </div>
+          <h1>Bem-vindo de volta</h1>
+          <p>Acesse seus painéis de encargos com segurança.</p>
+        </header>
+
+        <div class="login-tabs" role="tablist" aria-label="Selecionar modo de acesso">
+          <button class="tab-button active" data-tab="login" type="button">Entrar</button>
+          <button class="tab-button" data-tab="register" type="button">Cadastrar</button>
+        </div>
+
+        <p class="login-caption">Use seu e-mail corporativo para acompanhar cálculos, provisões e colaboradores.</p>
+
+        <form id="login-form" class="auth-form active" novalidate>
+          <div class="form-group">
+            <label for="login-email">E-mail</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope" aria-hidden="true"></i>
+              <input type="email" id="login-email" name="email" placeholder="seu@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="login-password">Senha</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock" aria-hidden="true"></i>
+              <input type="password" id="login-password" name="password" placeholder="Sua senha" required>
+              <button type="button" class="toggle-password" data-target="login-password" aria-label="Mostrar senha">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          
+
+          <button type="submit" class="btn-primary">
+            <span class="btn-text">Entrar agora</span>
+            <div class="btn-loading" aria-hidden="true">
+              <i class="fas fa-spinner fa-spin"></i>
+            </div>
+          </button>
+        </form>
+
+        <form id="register-form" class="auth-form" novalidate>
+          <div class="form-group">
+            <label for="register-name">Nome completo</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user" aria-hidden="true"></i>
+              <input type="text" id="register-name" name="name" placeholder="Seu nome completo" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="register-email">E-mail</label>
+            <div class="input-wrapper">
+              <i class="fas fa-envelope" aria-hidden="true"></i>
+              <input type="email" id="register-email" name="email" placeholder="seu@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="register-password">Senha</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock" aria-hidden="true"></i>
+              <input type="password" id="register-password" name="password" placeholder="Minimo 6 caracteres" required minlength="6">
+              <button type="button" class="toggle-password" data-target="register-password" aria-label="Mostrar senha">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="register-confirm-password">Confirmar senha</label>
+            <div class="input-wrapper">
+              <i class="fas fa-lock" aria-hidden="true"></i>
+              <input type="password" id="register-confirm-password" name="confirmPassword" placeholder="Confirme sua senha" required>
+              <button type="button" class="toggle-password" data-target="register-confirm-password" aria-label="Mostrar senha">
+                <i class="fas fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          
+
+          <button type="submit" class="btn-primary">
+            <span class="btn-text">Criar conta</span>
+            <div class="btn-loading" aria-hidden="true">
+              <i class="fas fa-spinner fa-spin"></i>
+            </div>
+          </button>
+        </form>
+
+        <section class="login-support" aria-live="polite">
+          <div>
+            <span class="login-support__badge">Suporte humano</span>
+            <h2>Recupere ou ative acessos rapidamente</h2>
+            <p>Equipe dedicada em horário comercial. Resposta média em 30 minutos.</p>
+          </div>
+          <div class="login-support__actions">
+            <button id="btn-support" class="support-button" type="button">
+              <i class="fab fa-whatsapp" aria-hidden="true"></i>
+              Falar com suporte
+            </button>
+            <button id="btn-dev-login" class="btn-dev" type="button">
+              <i class="fas fa-code" aria-hidden="true"></i>
+              Login de Desenvolvedor
+            </button>
+          </div>
+        </section>
+
+        <div id="message" class="message" aria-live="polite"></div>
+        <footer class="login-footer">Contato: <a href="mailto:contato@simulador.auditoriaemfoco.com">contato@simulador.auditoriaemfoco.com</a></footer>
+      </div>
+    </div>
+
+    <script type="module" src="/src/auth/login.page.ts"></script>
+  </body>
+</html>

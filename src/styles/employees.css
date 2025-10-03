@@ -1,0 +1,456 @@
+.employees-page {
+  display: grid;
+  gap: clamp(24px, 4vw, 36px);
+  padding-bottom: 48px;
+}
+
+.employees-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 32px);
+  padding: clamp(24px, 4vw, 36px);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(14, 165, 233, 0.08));
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 28px 60px -48px rgba(15, 23, 42, 0.55);
+}
+
+.employees-hero__copy {
+  display: grid;
+  gap: 12px;
+  max-width: min(520px, 100%);
+}
+
+.employees-hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(79, 70, 229, 0.12);
+  color: #4338ca;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.employees-hero__highlights {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.employees-hero__highlights li {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(248, 250, 252, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 18px 30px -28px rgba(15, 23, 42, 0.45);
+}
+
+.employees-hero__highlights li strong {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.employees-hero__highlights li span {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.employees-hero h1 {
+  margin: 0;
+  font-size: clamp(28px, 3.2vw, 36px);
+  letter-spacing: -0.02em;
+}
+
+.employees-hero p {
+  margin: 8px 0 0;
+  color: #475569;
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+.employees-hero__actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.employees-summary {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.summary-card {
+  padding: 20px 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: rgba(248, 250, 252, 0.9);
+  box-shadow: 0 18px 30px -28px rgba(15, 23, 42, 0.55);
+  display: grid;
+  gap: 6px;
+}
+
+.summary-card__label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+.summary-card__value {
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.summary-card__meta {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.employees-toolbar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(203, 213, 225, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 28px -24px rgba(30, 41, 59, 0.5);
+}
+
+.toolbar-field {
+  display: grid;
+  gap: 6px;
+}
+
+.toolbar-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.toolbar-field input,
+.toolbar-field select {
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.9);
+  background: rgba(248, 250, 252, 0.9);
+  padding: 0 14px;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.employees-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.employees-panel__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.employees-panel__heading h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.employees-panel__heading p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.employees-panel__chart {
+  display: grid;
+  gap: 16px;
+}
+
+.employees-form-card {
+  display: grid;
+  gap: 20px;
+}
+
+.employees-form-card__inner {
+  display: grid;
+  gap: 20px;
+}
+
+.employees-form {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.employees-form__footer {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(109, 91, 208, 0.12);
+  color: #5a49c2;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.employees-policy {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px dashed rgba(148, 163, 184, 0.6);
+  background: rgba(248, 250, 252, 0.7);
+}
+
+.employees-list {
+  display: grid;
+  gap: 24px;
+}
+
+.employee-card {
+  display: grid;
+  gap: 20px;
+}
+
+.employee-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.employee-card__title h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.employee-card__title span {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.employee-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.employee-card__body {
+  display: grid;
+  gap: 20px;
+}
+
+.employee-card__summary {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.employee-card__months {
+  display: grid;
+  gap: 16px;
+}
+
+.employee-month {
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 18px;
+  padding: 18px;
+  background: rgba(248, 250, 252, 0.85);
+  display: grid;
+  gap: 12px;
+}
+
+.employee-month__heading {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.employee-month__heading h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.employee-month__heading span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.employee-month__grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.employee-month__grid h5 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.employee-month__grid ul {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.employee-month__total {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.employee-month footer {
+  font-size: 13px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.employees-empty {
+  text-align: center;
+  display: grid;
+  gap: 12px;
+  padding: 40px;
+}
+
+.employees-empty h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.employees-empty p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+@media (max-width: 1024px) {
+  .employee-card__summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .employees-hero {
+    padding: 24px;
+  }
+
+  .employees-hero__actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .employees-toolbar {
+    padding: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .employees-hero {
+    background: linear-gradient(135deg, rgba(109, 91, 208, 0.25), rgba(37, 99, 235, 0.18));
+    border-color: rgba(99, 102, 241, 0.35);
+  }
+
+  .employees-hero p {
+    color: #cbd5f5;
+  }
+
+  .summary-card {
+    background: rgba(15, 23, 42, 0.82);
+    border-color: rgba(99, 102, 241, 0.2);
+    color: #e2e8f0;
+  }
+
+  .summary-card__value {
+    color: #f1f5f9;
+  }
+
+  .summary-card__meta {
+    color: #a5b4fc;
+  }
+
+  .employees-toolbar {
+    background: rgba(17, 24, 39, 0.75);
+    border-color: rgba(79, 70, 229, 0.3);
+  }
+
+  .toolbar-field input,
+  .toolbar-field select {
+    background: rgba(15, 23, 42, 0.85);
+    border-color: rgba(79, 70, 229, 0.35);
+    color: #f8fafc;
+  }
+
+  .employees-policy {
+    background: rgba(15, 23, 42, 0.75);
+    border-color: rgba(99, 102, 241, 0.4);
+  }
+
+  .employee-month {
+    background: rgba(17, 24, 39, 0.78);
+    border-color: rgba(99, 102, 241, 0.25);
+  }
+  /* Improve contrast for headings and labels on dark cards */
+  .employee-month__heading h4 { color: #e5e7eb; }
+  .employee-month__heading span { color: #a5b4fc; }
+  .employee-month__grid h5 { color: #e2e8f0; }
+
+  .employee-month__grid ul {
+    color: #cbd5f5;
+  }
+
+  .employee-month__total,
+  .employee-month footer { color: #f8fafc; }
+
+  .toolbar-note {
+    color: rgba(203, 213, 225, 0.7);
+  }
+}
+.toolbar-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+  text-align: center;
+}
